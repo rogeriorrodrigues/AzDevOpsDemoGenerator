@@ -124,3 +124,9 @@ This document provides step-by-step instructions on how to extract a template fr
 - If you encounter any issues during template extraction or project creation, check the console output for error messages.
 - Ensure that the `TemplateSetting.json` file is present in the `Templates` directory for the application to load templates.
 - If you skip updating the template settings, you can manually copy the generated artifacts and update the `TemplateSetting.json` file.
+
+---
+
+## Support
+
+For further assistance, refer to the SUPPORT.md file in the repository or contact the project maintainers.
