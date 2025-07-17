@@ -7,5 +7,6 @@ namespace ADOGenerator.IServices
         bool AnalyzeProject(Project model);
         bool CheckTemplateExists(Project model);
         (bool,string,string) GenerateTemplateArtifacts(Project model);
+        IEnumerable<TemplateSelection.Template> GetAvailableTemplates();
     }
 }

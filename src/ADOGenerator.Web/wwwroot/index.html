@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ADO Generator</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 2rem; }
+        label { display:block; margin-top:1rem; }
+        select, input[type=text], input[type=password] { width: 300px; }
+        button { margin-top:1rem; padding:0.5rem 1rem; }
+    </style>
+</head>
+<body>
+<h1>Create Azure DevOps Project</h1>
+<form id="createForm">
+    <label>Organization
+        <input type="text" id="org" required />
+    </label>
+    <label>Project Name
+        <input type="text" id="project" required />
+    </label>
+    <label>Template
+        <select id="template"></select>
+    </label>
+    <label>Access Token
+        <input type="password" id="token" required />
+    </label>
+    <label>Auth Scheme
+        <input type="text" id="scheme" value="pat" />
+    </label>
+    <button type="submit">Create Project</button>
+</form>
+<pre id="result"></pre>
+<script>
+async function loadTemplates() {
+    const res = await fetch('/api/templates');
+    const data = await res.json();
+    const sel = document.getElementById('template');
+    data.forEach(t => {
+        const opt = document.createElement('option');
+        opt.value = t.templateFolder;
+        opt.textContent = t.name;
+        sel.appendChild(opt);
+    });
+}
+loadTemplates();
+
+const form = document.getElementById('createForm');
+form.addEventListener('submit', async e => {
+    e.preventDefault();
+    const body = {
+        organization: document.getElementById('org').value,
+        projectName: document.getElementById('project').value,
+        templateName: document.getElementById('template').selectedOptions[0].text,
+        templateFolder: document.getElementById('template').value,
+        accessToken: document.getElementById('token').value,
+        authScheme: document.getElementById('scheme').value,
+        installExtensions: true
+    };
+    const res = await fetch('/api/projects/create', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(body)
+    });
+    const out = await res.json();
+    document.getElementById('result').textContent = JSON.stringify(out, null, 2);
+});
+</script>
+</body>
+</html>

@@ -23,6 +23,8 @@ For more information on contributing, please visit the [contributor guide](./CON
 
 A new ASP.NET Core project (`ADOGenerator.Web`) exposes minimal API endpoints that leverage the existing services to create projects or generate template artifacts. This application can be deployed to Azure App Service.
 
+The web app also serves a simple UI that lets you choose a template and create projects.
+
 ### Running locally
 
 ```bash
