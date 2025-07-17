@@ -18,3 +18,18 @@ For more information on contributing, please visit the [contributor guide](./CON
 ## Contributors:
 
 - [Akshay Hosur](https://github.com/akshay-online)
+
+## Web Application
+
+A new ASP.NET Core project (`ADOGenerator.Web`) exposes minimal API endpoints that leverage the existing services to create projects or generate template artifacts. This application can be deployed to Azure App Service.
+
+### Running locally
+
+```bash
+cd src/ADOGenerator.Web
+dotnet run
+```
+
+### Deploying to Azure
+
+Publish the project and deploy the generated output to an Azure App Service instance using the Azure portal or the `az webapp` CLI commands.
