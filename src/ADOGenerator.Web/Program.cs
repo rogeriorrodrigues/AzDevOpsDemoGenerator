@@ -1,6 +1,7 @@
 using ADOGenerator.IServices;
 using ADOGenerator.Models;
 using ADOGenerator.Services;
+using System.Linq;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,7 +12,26 @@ builder.Services.AddSingleton<IProjectService, ProjectService>();
 builder.Services.AddSingleton<ITemplateService, TemplateService>();
 builder.Services.AddSingleton<IAuthService, AuthService>();
 
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
 var app = builder.Build();
+
+app.UseDefaultFiles();
+app.UseStaticFiles();
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+
+app.MapGet("/api/templates", (ITemplateService svc) =>
+{
+    var list = svc.GetAvailableTemplates()
+        .Select(t => new { t.Name, t.TemplateFolder, t.Description });
+    return Results.Ok(list);
+});
 
 app.MapPost("/api/projects/create", (ProjectRequest request, IProjectService svc) =>
 {

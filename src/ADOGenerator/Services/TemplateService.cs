@@ -2,10 +2,13 @@
 using ADOGenerator.Models;
 using ADOGenerator.Services;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 using RestAPI.Extractor;
 using RestAPI.ProjectsAndTeams;
 using RestAPI;
 using ADOGenerator;
+using System.IO;
+using System.Linq;
 
 public class TemplateService : ITemplateService
 {
@@ -99,6 +102,24 @@ public class TemplateService : ITemplateService
             model.id.ErrorId().AddMessage("Error during artifact generation: " + ex.Message);
             return (false, string.Empty, string.Empty); // Artifact generation failed
         }
+    }
+
+    public IEnumerable<TemplateSelection.Template> GetAvailableTemplates()
+    {
+        var templatesPath = Path.Combine(Directory.GetCurrentDirectory(), "Templates", "TemplateSetting.json");
+        if (!File.Exists(templatesPath))
+        {
+            return Enumerable.Empty<TemplateSelection.Template>();
+        }
+
+        var json = File.ReadAllText(templatesPath);
+        var parsed = JsonConvert.DeserializeObject<TemplateSelection.Templates>(json);
+        if (parsed?.GroupwiseTemplates == null)
+        {
+            return Enumerable.Empty<TemplateSelection.Template>();
+        }
+
+        return parsed.GroupwiseTemplates.SelectMany(g => g.Template);
     }
 
     private void LogAnalysisResults(Project model, ExtractorAnalysis analysis)

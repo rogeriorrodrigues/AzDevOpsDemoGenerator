@@ -6,5 +6,13 @@
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\ADOGenerator\ADOGenerator.csproj" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="..\ADOGenerator\Templates\**\*.*">
+      <Link>Templates\%(RecursiveDir)%(Filename)%(Extension)</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 </Project>
