@@ -106,7 +106,7 @@ public class TemplateService : ITemplateService
 
     public IEnumerable<TemplateSelection.Template> GetAvailableTemplates()
     {
-        var templatesPath = Path.Combine(Directory.GetCurrentDirectory(), "Templates", "TemplateSetting.json");
+        var templatesPath = Path.Combine(AppContext.BaseDirectory, "Templates", "TemplateSetting.json");
         if (!File.Exists(templatesPath))
         {
             return Enumerable.Empty<TemplateSelection.Template>();
