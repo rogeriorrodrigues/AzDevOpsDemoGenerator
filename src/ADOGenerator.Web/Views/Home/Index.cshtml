@@ -1,0 +1,42 @@
+@model ADOGenerator.Web.ViewModels.ProjectViewModel
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>ADO Generator</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 2rem; }
+        label { display:block; margin-top:1rem; }
+        select, input[type=text], input[type=password] { width: 300px; }
+        button { margin-top:1rem; padding:0.5rem 1rem; }
+    </style>
+</head>
+<body>
+<h1>Create Azure DevOps Project</h1>
+<form asp-action="Create" asp-controller="Projects" method="post">
+    <label>Organization
+        <input asp-for="Organization" />
+    </label>
+    <label>Project Name
+        <input asp-for="ProjectName" />
+    </label>
+    <label>Template
+        <select asp-for="TemplateFolder" asp-items="Model.TemplateOptions"></select>
+    </label>
+    <label>Access Token
+        <input asp-for="AccessToken" type="password" />
+    </label>
+    <label>Auth Scheme
+        <input asp-for="AuthScheme" />
+    </label>
+    <label>
+        <input asp-for="InstallExtensions" type="checkbox" /> Install Extensions
+    </label>
+    <button type="submit">Create Project</button>
+</form>
+@if (Model.ResultMessage != null)
+{
+    <pre>@Model.ResultMessage</pre>
+}
+</body>
+</html>

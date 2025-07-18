@@ -183,7 +183,7 @@ namespace ADOGenerator.Services
         public string GetJsonFilePath(bool IsPrivate, string TemplateFolder, string TemplateName, string FileName = "")
         {
             string filePath = string.Empty;
-            filePath = string.Format(Path.Combine(Directory.GetCurrentDirectory(), "Templates", TemplateName, FileName));
+            filePath = Path.Combine(AppContext.BaseDirectory, "Templates", TemplateName, FileName);
             return filePath;
         }
 
@@ -366,7 +366,7 @@ namespace ADOGenerator.Services
                 Console.WriteLine("Error in reading project template file:" + ex.Message);
             }
             //create team project
-            string jsonProject = model.ReadJsonFile(Path.Combine(Directory.GetCurrentDirectory(), "Templates", "CreateProject.json"));
+            string jsonProject = model.ReadJsonFile(Path.Combine(AppContext.BaseDirectory, "Templates", "CreateProject.json"));
             jsonProject = jsonProject.Replace("$projectName$", model.ProjectName).Replace("$processTemplateId$", processTemplateId);
 
             Projects proj = new Projects(_projectCreationVersion);
@@ -2260,7 +2260,7 @@ namespace ADOGenerator.Services
                 bool isFolderCreated = false;
                 if (!string.IsNullOrEmpty(teamName))
                 {
-                    string createQueryFolderJson = File.ReadAllText(Path.Combine(Directory.GetCurrentDirectory(), "PreSetting", "CreateQueryFolder.json"));
+                    string createQueryFolderJson = File.ReadAllText(Path.Combine(AppContext.BaseDirectory, "PreSetting", "CreateQueryFolder.json"));
                     createQueryFolderJson = createQueryFolderJson.Replace("$TeamName$", teamName);
                     QueryResponse createFolderResponse = _newobjQuery.CreateQuery(model.ProjectName, createQueryFolderJson);
                     isFolderCreated = createFolderResponse.id != null ? true : false;
@@ -2787,7 +2787,7 @@ namespace ADOGenerator.Services
             {
                 string groupDetails = "";
                 TemplateSelection.Templates templates = new TemplateSelection.Templates();
-                string templatesPath = ""; templatesPath = Path.Combine(Directory.GetCurrentDirectory(), "Templates");
+                string templatesPath = Path.Combine(AppContext.BaseDirectory, "Templates");
                 if (File.Exists(templatesPath + "TemplateSetting.json"))
                 {
                     groupDetails = File.ReadAllText(templatesPath + "\\TemplateSetting.json");
@@ -2889,7 +2889,7 @@ namespace ADOGenerator.Services
         public bool WhereDoseTemplateBelongTo(string templatName)
         {
 
-            string privatePath = Path.Combine(Directory.GetCurrentDirectory(), "PrivateTemplates");
+            string privatePath = Path.Combine(AppContext.BaseDirectory, "PrivateTemplates");
             string privateTemplate = Path.Combine(privatePath, templatName);
 
             if (!Directory.Exists(privatePath))
