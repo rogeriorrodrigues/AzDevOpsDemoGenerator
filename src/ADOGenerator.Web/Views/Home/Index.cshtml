@@ -40,14 +40,15 @@
     document.getElementById('projectForm').addEventListener('submit', async function (e) {
         e.preventDefault();
         const form = e.target;
-            const data = {
-                Organization: form.Organization.value,
-                ProjectName: form.ProjectName.value,
-                TemplateFolder: form.TemplateFolder.value,
-                AccessToken: form.AccessToken.value,
-                AuthScheme: form.AuthScheme.value,
-                InstallExtensions: form.InstallExtensions.checked
-            };
+        const data = {
+            Organization: form.Organization.value,
+            ProjectName: form.ProjectName.value,
+            TemplateFolder: form.TemplateFolder.value,
+            AccessToken: form.AccessToken.value,
+            AuthScheme: form.AuthScheme.value,
+            InstallExtensions: form.InstallExtensions.checked
+        };
+
         const response = await fetch('/api/projects/create', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
