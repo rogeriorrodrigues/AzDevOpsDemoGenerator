@@ -48,6 +48,7 @@
             AuthScheme: form.AuthScheme.value,
             InstallExtensions: form.InstallExtensions.checked
         };
+
         const response = await fetch('/api/projects/create', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
